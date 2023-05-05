@@ -30,26 +30,21 @@ public class Cars {
              return (this.Brand + "\t" + this.Model + "\t" + this.Year + "\t" + this.Usedengine +  "\n");
         }
 
-    public static void main(String[] args) {
-        
-        ArrayList<Cars> Lager1 = new ArrayList<Cars>();
-    
-        Lager1.add(new Cars("Volvo", "V90", 2020, engine.Diesel));
-        Lager1.add(new Cars("MB", "CLA", 2020, engine.Hybrid));
-        Lager1.add(new Cars("Volvo", "XC60", 2018, engine.Diesel));
-        Lager1.add(new Cars("MB", "GLB", 2020, engine.Hybrid));
-        Lager1.add(new Cars("Volvo", "XC90", 2019, engine.Petrol));
-        Lager1.add(new Cars("MB", "E220", 2022, engine.Hybrid));
-        Lager1.add(new Cars("Volvo", "C40", 2023, engine.Electric));      
+    public static void AddingCars(ArrayList<Cars> Lager){
+        Lager.add(new Cars("Volvo", "V90", 2020, engine.Diesel));
+        Lager.add(new Cars("MB", "CLA", 2020, engine.Hybrid));
+        Lager.add(new Cars("Volvo", "XC60", 2018, engine.Diesel));
+        Lager.add(new Cars("MB", "GLB", 2020, engine.Hybrid));
+        Lager.add(new Cars("Volvo", "XC90", 2019, engine.Petrol));
+        Lager.add(new Cars("MB", "E220", 2022, engine.Hybrid));
+        Lager.add(new Cars("Volvo", "C40", 2023, engine.Electric));   
+    }
 
-        for (Cars cars : Lager1) {
-            System.out.print((Lager1.indexOf(cars)+1) + " " +cars.Out());
-        }
-
-        if (Lager1.size() > 0){
+    public static void OutStream(ArrayList<Cars> Lager, String LagerName){
+        if (Lager.size() > 0){
             try {
-                OutputStream out = new FileOutputStream("Lager3.txt");
-                for (Cars cars : Lager1){
+                OutputStream out = new FileOutputStream(LagerName);
+                for (Cars cars : Lager){
                     out.write(cars.Out().getBytes());   
                 }    
                 out.close();
@@ -57,9 +52,32 @@ public class Cars {
             catch (Exception e) {
                 e.getStackTrace();
             }
-            
-            
-        }        
+        }  
+    }
+
+    public static int CountVolvo(ArrayList<Cars> Lager, String CartoCount){
+        int counter = 0;
+        for (Cars cars : Lager) {
+            if (cars.Brand == CartoCount)
+                counter ++;
+        }
+        return counter;
+    }
+
+    public static void PrintOutStream(ArrayList<Cars> Lager){
+        for (Cars cars : Lager) {
+            System.out.print((Lager.indexOf(cars)+1) + " " +cars.Out());
+        }
+    }
+
+    public static void main(String[] args) {
+        String FileName = "Lager3.txt";
+        ArrayList<Cars> Lager1 = new ArrayList<Cars>();
+        AddingCars(Lager1);
+        PrintOutStream(Lager1);
+        OutStream(Lager1, FileName); 
+        String CartoCount = "Volvo";
+        System.out.println("Total number of " + CartoCount + " Cars in the Lager is: " + CountVolvo(Lager1, CartoCount));     
     }
     
 }
